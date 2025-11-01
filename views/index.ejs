@@ -1,0 +1,36 @@
+<%- include('layout') %>
+<div class="container">
+  <form action="/calculate" method="POST">
+    <select name="provider" onchange="updateModels()" required>
+      <% Object.keys(pricing).forEach(p => { %>
+        <option value="<%= p %>"><%= p.toUpperCase() %></option>
+      <% }) %>
+    </select>
+    <select name="model" id="model-select" required></select>
+    <textarea name="inputText" placeholder="Enter prompt..." oninput="countTokens()"></textarea>
+    <small id="token-counter">0 tokens</small>
+    <input type="number" name="outputWords" value="200" />
+    <input type="number" name="requests" value="1000" />
+    <button type="submit">Calculate</button>
+  </form>
+</div>
+<script>
+const pricing = <%- JSON.stringify(pricing) %>;
+function updateModels() {
+  const provider = document.querySelector('[name="provider"]').value;
+  const select = document.getElementById('model-select');
+  select.innerHTML = '';
+  pricing[provider].forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.model;
+    opt.textContent = m.model;
+    select.appendChild(opt);
+  });
+}
+updateModels();
+function countTokens() {
+  // Simple token estimate
+  const text = document.querySelector('[name="inputText"]').value;
+  document.getElementById('token-counter').textContent = text.length / 4 + ' tokens';
+}
+</script>
