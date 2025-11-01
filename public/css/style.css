@@ -1,0 +1,5 @@
+body { font-family: Arial; margin: 0; padding: 20px; }
+.container { max-width: 600px; margin: auto; }
+select, input, textarea, button { width: 100%; padding: 10px; margin: 5px 0; }
+button { background: #007bff; color: white; border: none; cursor: pointer; }
+header { background: #007bff; color: white; text-align: center; padding: 20px; }
